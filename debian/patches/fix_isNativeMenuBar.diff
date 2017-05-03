@@ -1,0 +1,65 @@
+Description: make QMenuBar::isNativeMenuBar() more reliable
+ Now it will not return true if the QPA plugin provides no platform menu bar,
+ and will not return false when Ubuntu global menu is in use.
+ .
+ Instead of trying to keep that variable in sync with platformMenuBar
+ state, just check whether platformMenuBar exists instead.
+Origin: upstream, https://code.qt.io/cgit/qt/qtbase.git/commit/?id=835d7cf54328bdd9
+Last-Update: 2017-05-03
+
+--- a/src/widgets/widgets/qmenubar.cpp
++++ b/src/widgets/widgets/qmenubar.cpp
+@@ -1810,10 +1810,8 @@
+ void QMenuBar::setNativeMenuBar(bool nativeMenuBar)
+ {
+     Q_D(QMenuBar);
+-    if (d->nativeMenuBar == -1 || (nativeMenuBar != bool(d->nativeMenuBar))) {
+-        d->nativeMenuBar = nativeMenuBar;
+-
+-        if (!d->nativeMenuBar) {
++    if (nativeMenuBar != bool(d->platformMenuBar)) {
++        if (!nativeMenuBar) {
+             delete d->platformMenuBar;
+             d->platformMenuBar = 0;
+         } else {
+@@ -1822,7 +1820,7 @@
+         }
+ 
+         updateGeometry();
+-        if (!d->nativeMenuBar && parentWidget())
++        if (!nativeMenuBar && parentWidget())
+             setVisible(true);
+     }
+ }
+@@ -1830,10 +1828,7 @@
+ bool QMenuBar::isNativeMenuBar() const
+ {
+     Q_D(const QMenuBar);
+-    if (d->nativeMenuBar == -1) {
+-        return !QApplication::instance()->testAttribute(Qt::AA_DontUseNativeMenuBar);
+-    }
+-    return d->nativeMenuBar;
++    return bool(d->platformMenuBar);
+ }
+ 
+ /*!
+--- a/src/widgets/widgets/qmenubar_p.h
++++ b/src/widgets/widgets/qmenubar_p.h
+@@ -59,7 +59,7 @@
+ public:
+     QMenuBarPrivate() : itemsDirty(0), currentAction(0), mouseDown(0),
+                          closePopupMode(0), defaultPopDown(1), popupState(0), keyboardState(0), altPressed(0),
+-                         nativeMenuBar(-1), doChildEffects(false), platformMenuBar(0)
++                         doChildEffects(false), platformMenuBar(0)
+ 
+ #ifdef Q_OS_WINCE
+                          , wce_menubar(0), wceClassicMenu(false)
+@@ -102,8 +102,6 @@
+     uint keyboardState : 1, altPressed : 1;
+     QPointer<QWidget> keyboardFocusWidget;
+ 
+-
+-    int nativeMenuBar : 3;  // Only has values -1, 0, and 1
+     //firing of events
+     void activateAction(QAction *, QAction::ActionEvent);
+ 

@@ -36,6 +36,10 @@ Fix-crash-because-of-NULL-screen-in-QXcbWindow.patch
 QtGui-Don-t-set-a-screen-to-a-child-window.patch
 xcb-Fix-drag-and-drop-to-applications-like-Emacs-and.patch
 xcb-Fix-drag-and-drop-to-Emacs.patch
+Fix-parsing-of-tzfile-5-POSIX-rule-zone-names-with-b.patch
+fix_isNativeMenuBar.diff
+global_menu_shortcuts.diff
+xcb-compress-mouse-motion-and-touch-update-events.patch
 
 # Debian specific.
 gnukfreebsd.diff
