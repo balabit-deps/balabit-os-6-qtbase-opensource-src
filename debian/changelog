@@ -1,3 +1,23 @@
+qtbase-opensource-src (5.5.1+dfsg-16ubuntu7.6) xenial-security; urgency=medium
+
+  * SECURITY UPDATE: double-free or corruption via illegal XML document
+    - debian/patches/CVE-2018-15518.patch: fix possible heap corruption in
+      QXmlStream in src/corelib/xml/qxmlstream_p.h.
+    - CVE-2018-15518
+  * SECURITY UPDATE: NULL pointer dereference in QGifHandler
+    - debian/patches/CVE-2018-19870.patch: check for QImage allocation
+      failure in src/gui/image/qgifhandler.cpp.
+    - CVE-2018-19870
+  * SECURITY UPDATE: buffer overflow in QBmpHandler
+    - debian/patches/CVE-2018-19873.patch: check for out of range image
+      size in src/gui/image/qbmphandler.cpp.
+    - CVE-2018-19873
+  * debian/rules: create a HOME directory so that tests can run.
+  * debian/patches/fix_failing_cookie_tests.patch: fix failing tests
+    because of expired cookies.
+
+ -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Mon, 11 Feb 2019 07:32:35 -0500
+
 qtbase-opensource-src (5.5.1+dfsg-16ubuntu7.5) xenial; urgency=medium
 
   * Backport upstream change to fix behavior of QMenuBar::isNativeMenuBar()

@@ -1,0 +1,61 @@
+From b75bc0f75c09b192dba68449b009cdf175519dbd Mon Sep 17 00:00:00 2001
+From: Simon Hausmann <simon.hausmann@qt.io>
+Date: Mon, 7 Aug 2017 16:47:19 +0200
+Subject: [PATCH] Fix failing network cookie jar tests
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+The test verifies that a cookie with a date in the future is not
+"expired" and will be sent to the server. This test started failing
+on August 7th 2017 when the test case "0003" with it's cookie expiring
+August 7th 2017 started ... expiring ;-)
+
+Bumped all suspicious cookie test cases by a hundred years.
+
+Change-Id: I7c09069ec4999e2ea0aae7b2a2819cced0fd6a99
+Reviewed-by: Jędrzej Nowacki <jedrzej.nowacki@qt.io>
+---
+ tests/auto/network/access/qnetworkcookiejar/parser.json | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/tests/auto/network/access/qnetworkcookiejar/parser.json b/tests/auto/network/access/qnetworkcookiejar/parser.json
+index de342e311b..8761fe93b0 100644
+--- a/tests/auto/network/access/qnetworkcookiejar/parser.json
++++ b/tests/auto/network/access/qnetworkcookiejar/parser.json
+@@ -11,7 +11,7 @@
+   {
+     "test": "0002",
+     "received": [
+-      "foo=bar; Expires=Fri, 07 Aug 2019 08:04:19 GMT"
++      "foo=bar; Expires=Fri, 07 Aug 2119 08:04:19 GMT"
+     ],
+     "sent": [
+       { "name": "foo", "value": "bar" }
+@@ -21,7 +21,7 @@
+     "test": "0003",
+     "received": [
+       "foo=bar; Expires=Fri, 07 Aug 2007 08:04:19 GMT",
+-      "foo2=bar2; Expires=Fri, 07 Aug 2017 08:04:19 GMT"
++      "foo2=bar2; Expires=Fri, 07 Aug 2117 08:04:19 GMT"
+     ],
+     "sent": [
+       { "name": "foo2", "value": "bar2" }
+@@ -710,7 +710,7 @@
+   {
+     "test": "COMMA0006",
+     "received": [
+-      "foo=bar; Expires=Fri, 07 Aug 2019 08:04:19 GMT"
++      "foo=bar; Expires=Fri, 07 Aug 2119 08:04:19 GMT"
+     ],
+     "sent": [
+       { "name": "foo", "value": "bar" }
+@@ -719,7 +719,7 @@
+   {
+     "test": "COMMA0007",
+     "received": [
+-      "foo=bar; Expires=Fri 07 Aug 2019 08:04:19 GMT, baz=qux"
++      "foo=bar; Expires=Fri 07 Aug 2119 08:04:19 GMT, baz=qux"
+     ],
+     "sent": [
+       { "name": "foo", "value": "bar" }
