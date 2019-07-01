@@ -1,3 +1,11 @@
+qtbase-opensource-src (5.5.1+dfsg-16ubuntu7.6bb2) xenial; urgency=medium
+
+  * debian/rules: the dh_install helper's depricated options (--fail-missing) are removed
+      from this file and use dh_missing instruction with correct option.
+      http://man7.org/linux/man-pages/man1/dh_install.1.html
+
+ -- Balabit Platform Team <gyorgy.kunert-tim@balabit.hu>  Mon, 01 Jul 2019 16:11:26 +0200
+
 qtbase-opensource-src (5.5.1+dfsg-16ubuntu7.6bb1) xenial; urgency=medium
 
   * Balabit patched version
