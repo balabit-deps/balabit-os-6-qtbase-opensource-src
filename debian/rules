@@ -184,7 +184,7 @@ override_dh_auto_test:
 	mkdir -p $(BUILDHOME)
 ifeq ($(DEB_HOST_ARCH),$(filter $(DEB_HOST_ARCH),$(testrun_architectures)))
 ifeq (,$(findstring nocheck,$(DEB_BUILD_OPTIONS)))
-		true
+		xvfb-run -a -s "-screen 0 640x480x24" make check QT_PLUGIN_PATH=$(CURDIR)/plugins LD_LIBRARY_PATH=$(CURDIR)/lib PATH=$(CURDIR)/bin:$(PATH) -k
 endif
 endif
 
